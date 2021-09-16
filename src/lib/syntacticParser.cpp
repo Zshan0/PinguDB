@@ -25,6 +25,9 @@ bool syntacticParse() {
     return syntacticParseEXPORT();
   else if (possibleQueryType == "SOURCE")
     return syntacticParseSOURCE();
+  // new functions
+  else if (possibleQueryType == "TRANSPOSE")
+    return syntacticParseTRANSPOSE();
   else {
     string resultantRelationName = possibleQueryType;
     if (tokenizedQuery[1] != "<-" || tokenizedQuery.size() < 3) {

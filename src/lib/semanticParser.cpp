@@ -31,6 +31,15 @@ bool semanticParse() {
     return semanticParseSORT();
   case SOURCE:
     return semanticParseSOURCE();
+  // new functions
+  case PRINT_MAT:
+    return semanticParsePRINT_MAT();
+  case TRANSPOSE:
+    return semanticParseTRANSPOSE();
+  case LOAD_MAT:
+    return semanticParseLOAD_MAT();
+  case EXPORT_MAT:
+    return semanticParseEXPORT_MAT();
   default:
     cout << "SEMANTIC ERROR" << endl;
   }

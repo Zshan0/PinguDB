@@ -19,3 +19,10 @@ void executeSOURCE();
 
 bool evaluateBinOp(int value1, int value2, BinaryOperator binaryOperator);
 void printRowCount(int rowCount);
+
+// new functions
+void executePRINT_MAT();
+void executeTRANSPOSE();
+void executeLOAD_MAT();
+void executeEXPORT_MAT();
+

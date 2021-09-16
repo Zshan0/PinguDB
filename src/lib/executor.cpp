@@ -45,6 +45,19 @@ void executeCommand() {
   case SOURCE:
     executeSOURCE();
     break;
+  // new functions
+  case PRINT_MAT:
+    executePRINT_MAT();
+    break;
+  case TRANSPOSE:
+    executeTRANSPOSE();
+    break;
+  case LOAD_MAT:
+    executeLOAD_MAT();
+    break;
+  case EXPORT_MAT:
+    executeEXPORT_MAT();
+    break;
   default:
     cout << "PARSING ERROR" << endl;
   }

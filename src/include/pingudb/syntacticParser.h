@@ -18,7 +18,12 @@ enum QueryType
     SELECTION,
     SORT,
     SOURCE,
-    UNDETERMINED
+    UNDETERMINED,
+    // new addition
+    PRINT_MAT,
+    TRANSPOSE,
+    LOAD_MAT,
+    EXPORT_MAT,
 };
 
 enum BinaryOperator
@@ -123,3 +128,7 @@ bool syntacticParseSOURCE();
 
 bool isFileExists(string tableName);
 bool isQueryFile(string fileName);
+
+// new functions
+bool syntacticParseTRANSPOSE();
+
