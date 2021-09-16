@@ -1,3 +1,5 @@
+#ifndef executor_H
+#define executor_H
 #include"semanticParser.h"
 
 void executeCommand();
@@ -26,3 +28,4 @@ void executeTRANSPOSE();
 void executeLOAD_MAT();
 void executeEXPORT_MAT();
 
+#endif

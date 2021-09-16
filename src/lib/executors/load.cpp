@@ -14,7 +14,7 @@ bool syntacticParseLOAD() {
         logger.log("syntacticParseLOAD_MATRIX");
 
         parsedQuery.queryType = LOAD_MAT;
-        parsedQuery.printRelationName = tokenizedQuery[2];
+        parsedQuery.loadRelationName = tokenizedQuery[2];
 
     } else if(tokenizedQuery.size() == 2) {
         parsedQuery.queryType = LOAD;
@@ -28,12 +28,12 @@ bool syntacticParseLOAD() {
 
 bool semanticParseLOAD() {
     logger.log("semanticParseLOAD");
-    if (tableCatalogue.isTable(parsedQuery.loadRelationName)) {
+    if(tableCatalogue.isTable(parsedQuery.loadRelationName)) {
         cout << "SEMANTIC ERROR: Relation already exists" << endl;
         return false;
     }
 
-    if (!isFileExists(parsedQuery.loadRelationName)) {
+    if(!isFileExists(parsedQuery.loadRelationName)) {
         cout << "SEMANTIC ERROR: Data file doesn't exist" << endl;
         return false;
     }
@@ -44,13 +44,13 @@ bool semanticParseLOAD_MAT() {
     logger.log("semanticParseLOAD_MAT");
 
     bool matrixExists = matrixCatalogue.isMatrix(parsedQuery.loadRelationName);
-    bool dataExists = isFileExists(parsedQuery.loadRelationName);
 
     if (matrixExists) {
         cout << "SEMANTIC ERROR: Matrix already exists" << endl;
         return false;
     }
 
+    bool dataExists = isFileExists(parsedQuery.loadRelationName);
     if (!dataExists) {
         cout << "SEMANTIC ERROR: Data file doesn't exist" << endl;
         return false;

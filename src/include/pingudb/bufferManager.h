@@ -1,3 +1,5 @@
+#ifndef bufferManager_H
+#define bufferManager_H
 #include"page.h"
 
 /**
@@ -25,14 +27,15 @@ class BufferManager{
     deque<Page> pages; 
     bool inPool(string pageName);
     Page getFromPool(string pageName);
-    Page insertIntoPool(string tableName, int pageIndex);
+    Page insertIntoPool(string tableName, int pageIndex, bool isTable=true);
 
     public:
     
     BufferManager();
-    Page getPage(string tableName, int pageIndex);
+    Page getPage(string tableName, int pageIndex, bool isTable=true);
     void writePage(string pageName, vector<vector<int>> rows);
+    void writePage(string tableName, int pageIndex, vector<vector<int>> rows, int rowCount);
     void deleteFile(string tableName, int pageIndex);
     void deleteFile(string fileName);
-    void writePage(string tableName, int pageIndex, vector<vector<int>> rows, int rowCount);
 };
+#endif

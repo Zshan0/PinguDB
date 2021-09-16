@@ -1,3 +1,5 @@
+#ifndef syntacticParser_H
+#define syntacticParser_H
 #include "tableCatalogue.h"
 #include "matrixCatalogue.h"
 
@@ -133,3 +135,4 @@ bool isQueryFile(string fileName);
 // new functions
 bool syntacticParseTRANSPOSE();
 
+#endif

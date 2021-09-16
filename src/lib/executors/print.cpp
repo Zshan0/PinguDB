@@ -31,7 +31,8 @@ bool syntacticParsePRINT()
 
 bool semanticParsePRINT_MAT() {
     logger.log("semanticParsePRINT_MAT");
-    bool exists = false; // need to make matrixCatalogue
+    // need to make matrixCatalogue
+    bool exists = matrixCatalogue.isMatrix(parsedQuery.printRelationName);
     if (!exists) {
         cout << "SEMANTIC ERROR: Matrix doesn't exist" << endl;
         return false;
@@ -61,6 +62,7 @@ void executePRINT()
 void executePRINT_MAT()
 {
     logger.log("executePRINT_MAT");
-    // to add matrix catalogue
+    Matrix* matrix = matrixCatalogue.getMatrix(parsedQuery.printRelationName);
+    matrix->print();
     return;
 }

@@ -1,3 +1,5 @@
+#ifndef page_H
+#define page_H
 #include"logger.h"
 /**
  * @brief The Page object is the main memory representation of a physical page
@@ -12,7 +14,7 @@
 
 class Page{
 
-    string tableName;
+    string constructName;
     string pageIndex;
     int columnCount;
     int rowCount;
@@ -22,8 +24,9 @@ class Page{
 
     string pageName = "";
     Page();
-    Page(string tableName, int pageIndex);
+    Page(string tableName, int pageIndex, bool isTable=true);
     Page(string tableName, int pageIndex, vector<vector<int>> rows, int rowCount);
     vector<int> getRow(int rowIndex);
     void writePage();
 };
+#endif

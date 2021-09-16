@@ -1,8 +1,8 @@
 #include "global.h"
 
-Cursor::Cursor(string tableName, int pageIndex) {
+Cursor::Cursor(string tableName, int pageIndex, bool isTable) {
   logger.log("Cursor::Cursor");
-  this->page = bufferManager.getPage(tableName, pageIndex);
+  this->page = bufferManager.getPage(tableName, pageIndex, isTable);
   this->pagePointer = 0;
   this->tableName = tableName;
   this->pageIndex = pageIndex;
@@ -15,12 +15,17 @@ Cursor::Cursor(string tableName, int pageIndex) {
  *
  * @return vector<int>
  */
-vector<int> Cursor::getNext() {
+vector<int> Cursor::getNext(bool isTable) {
   logger.log("Cursor::geNext");
   vector<int> result = this->page.getRow(this->pagePointer);
   this->pagePointer++;
   if (result.empty()) {
-    tableCatalogue.getTable(this->tableName)->getNextPage(this);
+    if(isTable) {
+      tableCatalogue.getTable(this->tableName)->getNextPage(this);
+    } else {
+      matrixCatalogue.getMatrix(this->tableName)->getNextPage(this);
+    }
+
     if (!this->pagePointer) {
       result = this->page.getRow(this->pagePointer);
       this->pagePointer++;
@@ -34,9 +39,9 @@ vector<int> Cursor::getNext() {
  *
  * @param pageIndex
  */
-void Cursor::nextPage(int pageIndex) {
+void Cursor::nextPage(int pageIndex, bool isTable) {
   logger.log("Cursor::nextPage");
-  this->page = bufferManager.getPage(this->tableName, pageIndex);
+  this->page = bufferManager.getPage(this->tableName, pageIndex, isTable);
   this->pageIndex = pageIndex;
   this->pagePointer = 0;
 }

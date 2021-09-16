@@ -31,7 +31,6 @@ bool Matrix::load() {
   if (this->sizeSetup())
     if (this->blockify())
       return true;
-  fin.close();
   return false;
 }
 
@@ -54,7 +53,7 @@ bool Matrix::sizeSetup() {
   string line;
   if (!getline(fin, line)) {
     fin.close();
-    return false
+    return false;
   }
   string word;
   stringstream s(line);
@@ -128,7 +127,7 @@ bool Matrix::blockify() {
  * stores
  * @param row
  */
-void matrix::updateStatistics(vector<int> row) {
+void Matrix::updateStatistics(vector<int> row) {
   this->rowCount++;
 }
 
@@ -144,10 +143,10 @@ void Matrix::print() {
 
   long long int count = min((long long int)PRINT_COUNT, this->rowCount);
 
-  Cursor cursor(this->matrixName, 0);
-  vector<long long int> row;
+  Cursor cursor(this->matrixName, 0, false);
+  vector<int> row;
   for (long long int rowCounter = 0; rowCounter < count; rowCounter++) {
-    row = cursor.getNext();
+    row = cursor.getNext(false);
     this->writeRow(row, cout);
   }
   printRowCount(this->rowCount);
@@ -164,7 +163,7 @@ void Matrix::getNextPage(Cursor *cursor) {
   logger.log("Matrix::getNext");
 
   if(cursor->pageIndex < this->blockCount - 1) {
-    cursor->nextPage(cursor->pageIndex + 1);
+    cursor->nextPage(cursor->pageIndex + 1, false);
   }
 }
 
@@ -181,11 +180,11 @@ void Matrix::makePermanent() {
 
   string newSourceFile = "../data/" + this->matrixName + ".csv";
   ofstream fout(newSourceFile, ios::out);
-  Cursor cursor(this->matrixName, 0);
+  Cursor cursor(this->matrixName, 0, false);
 
-  vector<long long int> row;
+  vector<int> row;
   for (long long int rowCounter = 0; rowCounter < this->rowCount; rowCounter++) {
-    row = cursor.getNext();
+    row = cursor.getNext(false);
     this->writeRow(row, fout);
   }
 
@@ -200,7 +199,7 @@ void Matrix::makePermanent() {
  */
 bool Matrix::isPermanent() {
   logger.log("Matrix::isPermanent");
-  return (this->sourceFileName == "../data/" + this->matrixName + ".csv")
+  return (this->sourceFileName == "../data/" + this->matrixName + ".csv");
 }
 
 /**
@@ -223,6 +222,6 @@ void Matrix::unload() {
  */
 Cursor Matrix::getCursor() {
   logger.log("Matrix::getCursor");
-  Cursor cursor(this->matrixName, 0);
+  Cursor cursor(this->matrixName, 0, false);
   return cursor;
 }

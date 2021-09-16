@@ -1,3 +1,5 @@
+#ifndef semanticParser_H
+#define semanticParser_H
 #include"syntacticParser.h"
 
 bool semanticParse();
@@ -22,3 +24,4 @@ bool semanticParseTRANSPOSE();
 bool semanticParseLOAD_MAT();
 bool semanticParseEXPORT_MAT();
 
+#endif

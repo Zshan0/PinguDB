@@ -1,3 +1,5 @@
+#ifndef cursor_H
+#define cursor_H
 #include"bufferManager.h"
 /**
  * @brief The cursor is an important component of the system. To read from a
@@ -13,7 +15,8 @@ class Cursor{
     int pagePointer;
 
     public:
-    Cursor(string tableName, int pageIndex);
-    vector<int> getNext();
-    void nextPage(int pageIndex);
+    Cursor(string tableName, int pageIndex, bool isTable=true);
+    vector<int> getNext(bool isTable=true);
+    void nextPage(int pageIndex, bool isTable=true);
 };
+#endif

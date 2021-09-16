@@ -20,7 +20,7 @@ Matrix *MatrixCatalogue::getMatrix(string matrixName) {
 
 bool MatrixCatalogue::isMatrix(string matrixName) {
   logger.log("MatrixCatalogue::isMatrix");
-  return (bool)this->matrices.count(matrixName)
+  return (bool)this->matrices.count(matrixName);
 }
 
 void MatrixCatalogue::print() {
@@ -28,8 +28,8 @@ void MatrixCatalogue::print() {
   cout << "\nMATRICES" << endl;
 
   int rowCount = 0;
-  for (auto matrix : this->matrices) {
-    cout << matrix.matrixName << endl;
+  for (auto m: this->matrices) {
+    cout << m.second->matrixName << endl;
     rowCount++;
   }
   printRowCount(rowCount);
