@@ -4,17 +4,20 @@ void TableCatalogue::insertTable(Table *table) {
   logger.log("TableCatalogue::~insertTable");
   this->tables[table->tableName] = table;
 }
+
 void TableCatalogue::deleteTable(string tableName) {
   logger.log("TableCatalogue::deleteTable");
   this->tables[tableName]->unload();
   delete this->tables[tableName];
   this->tables.erase(tableName);
 }
+
 Table *TableCatalogue::getTable(string tableName) {
   logger.log("TableCatalogue::getTable");
   Table *table = this->tables[tableName];
   return table;
 }
+
 bool TableCatalogue::isTable(string tableName) {
   logger.log("TableCatalogue::isTable");
   if (this->tables.count(tableName))

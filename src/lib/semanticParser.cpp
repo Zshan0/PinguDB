@@ -32,12 +32,12 @@ bool semanticParse() {
   case SOURCE:
     return semanticParseSOURCE();
   // new functions
+  case LOAD_MAT:
+    return semanticParseLOAD_MAT();
   case PRINT_MAT:
     return semanticParsePRINT_MAT();
   case TRANSPOSE:
     return semanticParseTRANSPOSE();
-  case LOAD_MAT:
-    return semanticParseLOAD_MAT();
   case EXPORT_MAT:
     return semanticParseEXPORT_MAT();
   default:

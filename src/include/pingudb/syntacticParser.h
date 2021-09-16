@@ -1,4 +1,5 @@
 #include "tableCatalogue.h"
+#include "matrixCatalogue.h"
 
 using namespace std;
 

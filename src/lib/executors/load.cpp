@@ -3,8 +3,7 @@
  * @brief 
  * SYNTAX: LOAD relation_name
  */
-bool syntacticParseLOAD()
-{
+bool syntacticParseLOAD() {
     logger.log("syntacticParseLOAD");
     if(tokenizedQuery.size() == 3) {
 
@@ -27,8 +26,7 @@ bool syntacticParseLOAD()
     return true;
 }
 
-bool semanticParseLOAD()
-{
+bool semanticParseLOAD() {
     logger.log("semanticParseLOAD");
     if (tableCatalogue.isTable(parsedQuery.loadRelationName)) {
         cout << "SEMANTIC ERROR: Relation already exists" << endl;
@@ -42,15 +40,14 @@ bool semanticParseLOAD()
     return true;
 }
 
-bool semanticParseLOAD_MAT()
-{
+bool semanticParseLOAD_MAT() {
     logger.log("semanticParseLOAD_MAT");
 
-    bool tableExists = false;
-    bool dataExists = false;
+    bool matrixExists = matrixCatalogue.isMatrix(parsedQuery.loadRelationName);
+    bool dataExists = isFileExists(parsedQuery.loadRelationName);
 
-    if (tableExists) {
-        cout << "SEMANTIC ERROR: Relation already exists" << endl;
+    if (matrixExists) {
+        cout << "SEMANTIC ERROR: Matrix already exists" << endl;
         return false;
     }
 
@@ -61,8 +58,7 @@ bool semanticParseLOAD_MAT()
     return true;
 }
 
-void executeLOAD()
-{
+void executeLOAD() {
     logger.log("executeLOAD");
 
     Table *table = new Table(parsedQuery.loadRelationName);
@@ -74,9 +70,13 @@ void executeLOAD()
     return;
 }
 
-void executeLOAD_MAT()
-{
+void executeLOAD_MAT() {
     logger.log("executeLOAD_MAT");
-    // need matrix catalogue and matrix class
+    Matrix *matrix = new Matrix(parsedQuery.loadRelationName);
+    if (matrix->load())
+    {
+        matrixCatalogue.insertMatrix(matrix);
+        cout << "Loaded Matrix. Column Count: " << matrix->columnCount << " Row Count: " << matrix->rowCount << endl;
+    }
     return;
 }
