@@ -20,7 +20,7 @@ vector<int> Cursor::getNext(bool isTable) {
   vector<int> result = this->page.getRow(this->pagePointer);
   this->pagePointer++;
   if (result.empty()) {
-    if(isTable) {
+    if (isTable) {
       tableCatalogue.getTable(this->tableName)->getNextPage(this);
     } else {
       matrixCatalogue.getMatrix(this->tableName)->getNextPage(this);

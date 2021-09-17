@@ -12,12 +12,12 @@ BIN_NAME = server
 SRC_EXT = cpp
 
 # code lists #
-# Find all source files in the source directory, sorted by
-# most recently modified
+#Find all source files in the source directory, sorted by most recently
+# modified.
 SOURCES = $(shell find $(SRC_PATH) -name '*.$(SRC_EXT)' | sort -k 1nr | cut -f2-)
 # Set the object file names, with the source directory stripped
 # from the path, and the build path prepended in its place
-OBJECTS = $(SOURCES:$(SRC_PATH)/%.$(SRC_EXT)=$(BUILD_PATH)/%.o)
+OBJECTS = $(SOURCES:$(SRC_PATH)/%.$(SRC_EXT)=$(BUILD_PATH)/%.o) build/server.o
 # Set the dependency files that will be used to add header dependencies
 DEPS = $(OBJECTS:.o=.d)
 
@@ -63,6 +63,11 @@ $(BIN_PATH)/$(BIN_NAME): $(OBJECTS)
 
 # Add dependency files, if they exist
 -include $(DEPS)
+
+# Build seperatly for server.cpp
+$(BUILD_PATH)/server.o: tools/server.cpp
+	@echo "Compiling: $< -> $@"
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -MP -MMD -c $< -o $@
 
 # Source file rules
 # After the first compilation they will be joined with the rules from the

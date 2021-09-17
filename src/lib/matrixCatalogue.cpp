@@ -28,7 +28,7 @@ void MatrixCatalogue::print() {
   cout << "\nMATRICES" << endl;
 
   int rowCount = 0;
-  for (auto m: this->matrices) {
+  for (auto m : this->matrices) {
     cout << m.second->matrixName << endl;
     rowCount++;
   }

@@ -1,6 +1,6 @@
 #ifndef semanticParser_H
 #define semanticParser_H
-#include"syntacticParser.h"
+#include "syntacticParser.h"
 
 bool semanticParse();
 

@@ -1,116 +1,103 @@
 #ifndef syntacticParser_H
 #define syntacticParser_H
-#include "tableCatalogue.h"
 #include "matrixCatalogue.h"
+#include "tableCatalogue.h"
 
 using namespace std;
 
-enum QueryType
-{
-    CLEAR,
-    CROSS,
-    DISTINCT,
-    EXPORT,
-    INDEX,
-    JOIN,
-    LIST,
-    LOAD,
-    PRINT,
-    PROJECTION,
-    RENAME,
-    SELECTION,
-    SORT,
-    SOURCE,
-    UNDETERMINED,
-    // new addition
-    PRINT_MAT,
-    TRANSPOSE,
-    LOAD_MAT,
-    EXPORT_MAT,
+enum QueryType {
+  CLEAR,
+  CROSS,
+  DISTINCT,
+  EXPORT,
+  INDEX,
+  JOIN,
+  LIST,
+  LOAD,
+  PRINT,
+  PROJECTION,
+  RENAME,
+  SELECTION,
+  SORT,
+  SOURCE,
+  UNDETERMINED,
+  // new addition
+  PRINT_MAT,
+  TRANSPOSE,
+  LOAD_MAT,
+  EXPORT_MAT,
 };
 
-enum BinaryOperator
-{
-    LESS_THAN,
-    GREATER_THAN,
-    LEQ,
-    GEQ,
-    EQUAL,
-    NOT_EQUAL,
-    NO_BINOP_CLAUSE
+enum BinaryOperator {
+  LESS_THAN,
+  GREATER_THAN,
+  LEQ,
+  GEQ,
+  EQUAL,
+  NOT_EQUAL,
+  NO_BINOP_CLAUSE
 };
 
-enum SortingStrategy
-{
-    ASC,
-    DESC,
-    NO_SORT_CLAUSE
-};
+enum SortingStrategy { ASC, DESC, NO_SORT_CLAUSE };
 
-enum SelectType
-{
-    COLUMN,
-    INT_LITERAL,
-    NO_SELECT_CLAUSE
-};
+enum SelectType { COLUMN, INT_LITERAL, NO_SELECT_CLAUSE };
 
-class ParsedQuery
-{
+class ParsedQuery {
 
 public:
-    QueryType queryType = UNDETERMINED;
+  QueryType queryType = UNDETERMINED;
 
-    string clearRelationName = "";
+  string clearRelationName = "";
 
-    string crossResultRelationName = "";
-    string crossFirstRelationName = "";
-    string crossSecondRelationName = "";
+  string crossResultRelationName = "";
+  string crossFirstRelationName = "";
+  string crossSecondRelationName = "";
 
-    string distinctResultRelationName = "";
-    string distinctRelationName = "";
+  string distinctResultRelationName = "";
+  string distinctRelationName = "";
 
-    string exportRelationName = "";
+  string exportRelationName = "";
 
-    IndexingStrategy indexingStrategy = NOTHING;
-    string indexColumnName = "";
-    string indexRelationName = "";
+  IndexingStrategy indexingStrategy = NOTHING;
+  string indexColumnName = "";
+  string indexRelationName = "";
 
-    BinaryOperator joinBinaryOperator = NO_BINOP_CLAUSE;
-    string joinResultRelationName = "";
-    string joinFirstRelationName = "";
-    string joinSecondRelationName = "";
-    string joinFirstColumnName = "";
-    string joinSecondColumnName = "";
+  BinaryOperator joinBinaryOperator = NO_BINOP_CLAUSE;
+  string joinResultRelationName = "";
+  string joinFirstRelationName = "";
+  string joinSecondRelationName = "";
+  string joinFirstColumnName = "";
+  string joinSecondColumnName = "";
 
-    string loadRelationName = "";
+  string loadRelationName = "";
 
-    string printRelationName = "";
+  string printRelationName = "";
 
-    string projectionResultRelationName = "";
-    vector<string> projectionColumnList;
-    string projectionRelationName = "";
+  string projectionResultRelationName = "";
+  vector<string> projectionColumnList;
+  string projectionRelationName = "";
 
-    string renameFromColumnName = "";
-    string renameToColumnName = "";
-    string renameRelationName = "";
+  string renameFromColumnName = "";
+  string renameToColumnName = "";
+  string renameRelationName = "";
 
-    SelectType selectType = NO_SELECT_CLAUSE;
-    BinaryOperator selectionBinaryOperator = NO_BINOP_CLAUSE;
-    string selectionResultRelationName = "";
-    string selectionRelationName = "";
-    string selectionFirstColumnName = "";
-    string selectionSecondColumnName = "";
-    int selectionIntLiteral = 0;
+  SelectType selectType = NO_SELECT_CLAUSE;
+  BinaryOperator selectionBinaryOperator = NO_BINOP_CLAUSE;
+  string selectionResultRelationName = "";
+  string selectionRelationName = "";
+  string selectionFirstColumnName = "";
+  string selectionSecondColumnName = "";
+  int selectionIntLiteral = 0;
 
-    SortingStrategy sortingStrategy = NO_SORT_CLAUSE;
-    string sortResultRelationName = "";
-    string sortColumnName = "";
-    string sortRelationName = "";
+  SortingStrategy sortingStrategy = NO_SORT_CLAUSE;
+  string sortResultRelationName = "";
+  string sortColumnName = "";
+  string sortRelationName = "";
 
-    string sourceFileName = "";
+  string sourceFileName = "";
 
-    ParsedQuery();
-    void clear();
+  ParsedQuery();
+  void clear();
 };
 
 bool syntacticParse();
