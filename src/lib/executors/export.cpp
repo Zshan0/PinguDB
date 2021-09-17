@@ -41,7 +41,7 @@ bool semanticParseEXPORT_MAT()
 {
     logger.log("semanticParseEXPORT_MAT");
     //Matrix should exist
-    bool exists = false;
+    bool exists = matrixCatalogue.isMatrix(parsedQuery.exportRelationName);
     if (exists)
         return true;
     cout << "SEMANTIC ERROR: No such relation exists" << endl;
@@ -59,6 +59,7 @@ void executeEXPORT()
 void executeEXPORT_MAT()
 {
     logger.log("executeEXPORT_MAT");
-    // need to add matrix catalog and matrix
+    Matrix* matrix = matrixCatalogue.getMatrix(parsedQuery.exportRelationName);
+    matrix->makePermanent();
     return;
 }

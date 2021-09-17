@@ -21,7 +21,7 @@ bool syntacticParseTRANSPOSE()
 
 bool semanticParseTRANSPOSE() {
     logger.log("semanticParseTRANSPOSE");
-    bool exists = false; // need to make matrixCatalogue
+    bool exists = matrixCatalogue.isMatrix(parsedQuery.printRelationName);
     if (!exists) {
         cout << "SEMANTIC ERROR: Matrix doesn't exist" << endl;
         return false;

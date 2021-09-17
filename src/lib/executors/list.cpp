@@ -25,4 +25,5 @@ void executeLIST()
 {
     logger.log("executeLIST");
     tableCatalogue.print();
+    matrixCatalogue.print();
 }

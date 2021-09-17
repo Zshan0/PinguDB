@@ -20,6 +20,7 @@ public:
     long long int rowCount = 0;
     long long int blockCount = 0;
     long long int maxRowsPerBlock = 0;
+    long long int nonZeroElements = 0;
     vector<long long int> rowsPerBlockCount;
     bool sparse = false;
 

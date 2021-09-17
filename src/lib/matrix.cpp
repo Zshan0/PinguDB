@@ -78,7 +78,9 @@ bool Matrix::sizeSetup() {
  * @return false otherwise
  */
 bool Matrix::blockify() {
-
+  /*
+    NEED TO FIX -> ADD SUPPORT FOR COLUMNS > BLOCK SIZE
+  */
   logger.log("Matrix::blockify");
 
   ifstream fin(this->sourceFileName, ios::in);
@@ -128,6 +130,9 @@ bool Matrix::blockify() {
  * @param row
  */
 void Matrix::updateStatistics(vector<int> row) {
+  for(auto x: row) {
+    this->nonZeroElements += (int)(x != 0)
+  }
   this->rowCount++;
 }
 
