@@ -10,6 +10,11 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "Create indexing for clangd"
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
+set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Wall -g")
+set(CMAKE_CXX_FLAGS_RELEASE_INIT "-O3")
+
+add_subdirectory(extern)
+
 add_subdirectory(lib)
 
 add_subdirectory(tools)
