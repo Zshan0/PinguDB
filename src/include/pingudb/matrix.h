@@ -29,6 +29,7 @@ public:
     Matrix(string tableName);
     bool sizeSetup();
     void updateStatistics(vector<int> row);
+    bool isSparse();
     bool load();
     void print();
     void makePermanent();
