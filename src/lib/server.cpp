@@ -1,5 +1,5 @@
 // Server Code
-#include "global.h"
+#include "pingudb/global.h"
 
 using namespace std;
 

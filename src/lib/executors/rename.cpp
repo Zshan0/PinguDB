@@ -1,4 +1,4 @@
-#include "global.h"
+#include "pingudb/global.h"
 /**
  * @brief 
  * SYNTAX: RENAME column_name TO column_name FROM relation_name

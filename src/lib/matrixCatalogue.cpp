@@ -1,4 +1,4 @@
-#include "global.h"
+#include "pingudb/global.h"
 
 void MatrixCatalogue::insertMatrix(Matrix *matrix) {
   logger.log("MatrixCatalogue::~insertMatrix");

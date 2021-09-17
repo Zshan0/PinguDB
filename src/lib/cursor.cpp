@@ -1,4 +1,4 @@
-#include "global.h"
+#include "pingudb/global.h"
 
 Cursor::Cursor(string tableName, int pageIndex, bool isTable) {
   logger.log("Cursor::Cursor");

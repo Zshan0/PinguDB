@@ -1,4 +1,4 @@
-#include "global.h"
+#include "pingudb/global.h"
 /**
  * @brief 
  * SYNTAX: R <- SELECT column_name bin_op [column_name | int_literal] FROM relation_name

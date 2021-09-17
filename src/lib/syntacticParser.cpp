@@ -1,4 +1,4 @@
-#include "global.h"
+#include "pingudb/global.h"
 
 bool syntacticParse() {
   logger.log("syntacticParse");

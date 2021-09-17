@@ -1,4 +1,4 @@
-#include "global.h"
+#include "pingudb/global.h"
 /**
  * @brief 
  * SYNTAX: PRINT relation_name

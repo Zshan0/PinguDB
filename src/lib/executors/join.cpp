@@ -1,4 +1,4 @@
-#include "global.h"
+#include "pingudb/global.h"
 /**
  * @brief 
  * SYNTAX: R <- JOIN relation_name1, relation_name2 ON column_name1 bin_op column_name2

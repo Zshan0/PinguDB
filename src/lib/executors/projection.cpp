@@ -1,4 +1,4 @@
-#include "global.h"
+#include "pingudb/global.h"
 /**
  * @brief 
  * SYNTAX: R <- PROJECT column_name1, ... FROM relation_name
