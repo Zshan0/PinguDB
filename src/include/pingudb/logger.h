@@ -1,21 +1,20 @@
 #ifndef logger_H
 #define logger_H
-#include<iostream>
-#include<bits/stdc++.h>
-#include<sys/stat.h> 
-#include<fstream>
+#include <bits/stdc++.h>
+#include <fstream>
+#include <iostream>
+#include <sys/stat.h>
 
 using namespace std;
 
-class Logger{
+class Logger {
 
-    string logFile = "log";
-    ofstream fout;
-    
-    public:
+  string logFile = "log";
+  ofstream fout;
 
-    Logger();
-    void log(string logString);
+public:
+  Logger();
+  void log(string logString);
 };
 
 extern Logger logger;

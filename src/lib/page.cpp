@@ -1,4 +1,4 @@
-#include "global.h"
+#include "pingudb/global.h"
 /**
  * @brief Construct a new Page object. Never used as part of the code
  *
@@ -16,8 +16,8 @@ Page::Page() {
  * @brief Construct a new Page:: Page object given the table name and page
  * index. When tables are loaded they are broken up into blocks of BLOCK_SIZE
  * and each block is stored in a different file named
- * "<constructName>_Page<pageindex>". For example, If the Page being loaded is of
- * table "R" and the pageIndex is 2 then the file name is "R_Page2". The page
+ * "<constructName>_Page<pageindex>". For example, If the Page being loaded is
+ * of table "R" and the pageIndex is 2 then the file name is "R_Page2". The page
  * loads the rows (or tuples) into a vector of rows (where each row is a vector
  * of integers).
  *
@@ -26,7 +26,7 @@ Page::Page() {
  */
 Page::Page(string constructName, int pageIndex, bool isTable) {
   logger.log("Page::Page");
-  if(isTable) {
+  if (isTable) {
     this->constructName = constructName;
     this->pageIndex = pageIndex;
     this->pageName =
@@ -41,7 +41,8 @@ Page::Page(string constructName, int pageIndex, bool isTable) {
     this->rowCount = table.rowsPerBlockCount[pageIndex];
     int number;
     for (uint rowCounter = 0; rowCounter < this->rowCount; rowCounter++) {
-      for (int columnCounter = 0; columnCounter < columnCount; columnCounter++) {
+      for (int columnCounter = 0; columnCounter < columnCount;
+           columnCounter++) {
         fin >> number;
         this->rows[rowCounter][columnCounter] = number;
       }
@@ -63,7 +64,8 @@ Page::Page(string constructName, int pageIndex, bool isTable) {
     this->rowCount = matrix.rowsPerBlockCount[pageIndex];
     int number;
     for (uint rowCounter = 0; rowCounter < this->rowCount; rowCounter++) {
-      for (int columnCounter = 0; columnCounter < columnCount; columnCounter++) {
+      for (int columnCounter = 0; columnCounter < columnCount;
+           columnCounter++) {
         fin >> number;
         this->rows[rowCounter][columnCounter] = number;
       }

@@ -1,4 +1,4 @@
-#include "global.h"
+#include "pingudb/global.h"
 /**
  * @brief Construct a new Matrix:: Matrix object
  *
@@ -6,9 +6,9 @@
 Matrix::Matrix() { logger.log("Matrix::Matrix"); }
 
 /**
- * @brief Construct a new Matrix :: Matrix object used in the case where the data
- * file is available and LOAD command has been called. This command should be
- * followed by calling the load function;
+ * @brief Construct a new Matrix :: Matrix object used in the case where the
+ * data file is available and LOAD command has been called. This command should
+ * be followed by calling the load function;
  *
  * @param matrixName
  */
@@ -47,11 +47,11 @@ bool Matrix::isSparse() {
   long long int nonZeros = 0;
   long long total = 0;
 
-  while(getline(fin, line)) {
+  while (getline(fin, line)) {
     stringstream s(line);
-    for(int columnCounter = 0; columnCounter < this->columnCount;
+    for (int columnCounter = 0; columnCounter < this->columnCount;
          columnCounter++) {
-      if(!getline(s, word, ','))
+      if (!getline(s, word, ','))
         return false;
       num = stoi(word);
       nonZeros += (int)(num != 0);
@@ -75,9 +75,9 @@ bool Matrix::sizeSetup() {
   logger.log("Matrix::sizeSetup");
 
   /*
-  * checking the size of the first line to get the columnCount
-  * CAN BE BETTER
-  */
+   * checking the size of the first line to get the columnCount
+   * CAN BE BETTER
+   */
 
   fstream fin(this->sourceFileName, ios::in);
   string line;
@@ -88,19 +88,19 @@ bool Matrix::sizeSetup() {
   string word;
   stringstream s(line);
   int colCount = 0;
-  vector <int> row;
+  vector<int> row;
   while (getline(s, word, ',')) {
     row.push_back(stoi(word));
   }
-  if(colCount == 0) {
+  if (colCount == 0) {
     return false;
   }
 
   this->columnCount = row.size();
   cout << "colCount" << this->columnCount << endl;
-  if(this->sparse) {
+  if (this->sparse) {
     this->maxRowsPerBlock =
-      (long long int)((BLOCK_SIZE * 1000) / (sizeof(long long int) * 3));
+        (long long int)((BLOCK_SIZE * 1000) / (sizeof(long long int) * 3));
     return true;
   }
 
@@ -122,7 +122,7 @@ bool Matrix::blockify() {
   */
   logger.log("Matrix::blockify");
 
-  if(not this->sparse) {
+  if (not this->sparse) {
     ifstream fin(this->sourceFileName, ios::in);
     string line, word;
     vector<int> row(this->columnCount, 0);
@@ -130,12 +130,12 @@ bool Matrix::blockify() {
 
     int pageCounter = 0;
 
-    while(getline(fin, line)) {
+    while (getline(fin, line)) {
 
       stringstream s(line);
-      for(int columnCounter = 0; columnCounter < this->columnCount;
+      for (int columnCounter = 0; columnCounter < this->columnCount;
            columnCounter++) {
-        if(!getline(s, word, ','))
+        if (!getline(s, word, ','))
           return false;
         row[columnCounter] = stoi(word);
         rowsInPage[pageCounter][columnCounter] = row[columnCounter];
@@ -143,7 +143,7 @@ bool Matrix::blockify() {
       pageCounter++;
       this->updateStatistics(row);
 
-      if(pageCounter == this->maxRowsPerBlock) {
+      if (pageCounter == this->maxRowsPerBlock) {
         bufferManager.writePage(this->matrixName, this->blockCount, rowsInPage,
                                 pageCounter);
         this->blockCount++;
@@ -153,7 +153,7 @@ bool Matrix::blockify() {
     }
 
     // if anything is remaining
-    if(pageCounter) {
+    if (pageCounter) {
       bufferManager.writePage(this->matrixName, this->blockCount, rowsInPage,
                               pageCounter);
       this->blockCount++;
@@ -172,16 +172,18 @@ bool Matrix::blockify() {
     int i = 0, j = 0;
     int pageCounter = 0;
 
-    while(getline(fin, line)) {
+    while (getline(fin, line)) {
       stringstream s(line);
 
-      for(int columnCounter = 0; columnCounter < this->columnCount;
+      for (int columnCounter = 0; columnCounter < this->columnCount;
            columnCounter++) {
-        if(!getline(s, word, ','))
+        if (!getline(s, word, ','))
           return false;
         int num = stoi(word);
-        if(num != 0) {
-          row[0] = i; row[1] = j; row[2] = num;
+        if (num != 0) {
+          row[0] = i;
+          row[1] = j;
+          row[2] = num;
           rowsInPage[pageCounter][0] = i;
           rowsInPage[pageCounter][1] = j;
           rowsInPage[pageCounter][2] = num;
@@ -191,7 +193,7 @@ bool Matrix::blockify() {
         j++;
       }
 
-      if(pageCounter == this->maxRowsPerBlock) {
+      if (pageCounter == this->maxRowsPerBlock) {
         bufferManager.writePage(this->matrixName, this->blockCount, rowsInPage,
                                 pageCounter);
         this->blockCount++;
@@ -202,7 +204,7 @@ bool Matrix::blockify() {
     }
 
     // if anything is remaining
-    if(pageCounter) {
+    if (pageCounter) {
       bufferManager.writePage(this->matrixName, this->blockCount, rowsInPage,
                               pageCounter);
       this->blockCount++;
@@ -220,18 +222,17 @@ bool Matrix::blockify() {
  */
 void Matrix::updateStatistics(vector<int> row) {
   cout << "here:";
-  for(int i = 0; i < 3; i++) {
+  for (int i = 0; i < 3; i++) {
     cout << row[i] << " ";
   }
   cout << endl;
   this->rowCount++;
 }
 
-
 /**
- * @brief Function prints the first few rows of the matrix. If the matrix contains
- * more rows than PRINT_COUNT, exactly PRINT_COUNT rows are printed, else all
- * the rows are printed.
+ * @brief Function prints the first few rows of the matrix. If the matrix
+ * contains more rows than PRINT_COUNT, exactly PRINT_COUNT rows are printed,
+ * else all the rows are printed.
  *
  */
 void Matrix::print() {
@@ -239,10 +240,10 @@ void Matrix::print() {
 
   long long int count = min((long long int)PRINT_COUNT, this->rowCount);
 
-  if(not this->sparse) {
+  if (not this->sparse) {
     Cursor cursor(this->matrixName, 0, false);
     vector<int> row;
-    for(long long int rowCounter = 0; rowCounter < count; rowCounter++) {
+    for (long long int rowCounter = 0; rowCounter < count; rowCounter++) {
       row = cursor.getNext(false);
       this->writeRow(row, cout);
     }
@@ -251,7 +252,7 @@ void Matrix::print() {
     /* sparse matrix */
     Cursor cursor(this->matrixName, 0, false);
     vector<int> row;
-    for(long long int rowCounter = 0; rowCounter < count; rowCounter++) {
+    for (long long int rowCounter = 0; rowCounter < count; rowCounter++) {
       row = cursor.getNext(false);
       this->writeRow(row, cout);
     }
@@ -260,8 +261,8 @@ void Matrix::print() {
 }
 
 /**
- * @brief This function returns one row of the matrix using the cursor object. It
- * returns an empty row is all rows have been read.
+ * @brief This function returns one row of the matrix using the cursor object.
+ * It returns an empty row is all rows have been read.
  *
  * @param cursor
  * @return vector<int>
@@ -269,7 +270,7 @@ void Matrix::print() {
 void Matrix::getNextPage(Cursor *cursor) {
   logger.log("Matrix::getNext");
 
-  if(cursor->pageIndex < this->blockCount - 1) {
+  if (cursor->pageIndex < this->blockCount - 1) {
     cursor->nextPage(cursor->pageIndex + 1, false);
   }
 }
@@ -282,7 +283,7 @@ void Matrix::getNextPage(Cursor *cursor) {
 void Matrix::makePermanent() {
   logger.log("Matrix::makePermanent");
 
-  if(!this->isPermanent())
+  if (!this->isPermanent())
     bufferManager.deleteFile(this->sourceFileName);
 
   string newSourceFile = "../data/" + this->matrixName + ".csv";
@@ -290,7 +291,8 @@ void Matrix::makePermanent() {
   Cursor cursor(this->matrixName, 0, false);
 
   vector<int> row;
-  for (long long int rowCounter = 0; rowCounter < this->rowCount; rowCounter++) {
+  for (long long int rowCounter = 0; rowCounter < this->rowCount;
+       rowCounter++) {
     row = cursor.getNext(false);
     this->writeRow(row, fout);
   }
@@ -316,7 +318,8 @@ bool Matrix::isPermanent() {
  */
 void Matrix::unload() {
   logger.log("Matrix::~unload");
-  for (long long int pageCounter = 0; pageCounter < this->blockCount; pageCounter++)
+  for (long long int pageCounter = 0; pageCounter < this->blockCount;
+       pageCounter++)
     bufferManager.deleteFile(this->matrixName, pageCounter);
   if (!isPermanent())
     bufferManager.deleteFile(this->sourceFileName);

@@ -1,4 +1,4 @@
-#include "global.h"
+#include "pingudb/global.h"
 
 void TableCatalogue::insertTable(Table *table) {
   logger.log("TableCatalogue::~insertTable");

@@ -1,4 +1,4 @@
-#include "global.h"
+#include "pingudb/global.h"
 
 BufferManager::BufferManager() { logger.log("BufferManager::BufferManager"); }
 
@@ -60,7 +60,8 @@ Page BufferManager::getFromPool(string pageName) {
  * @param pageIndex
  * @return Page
  */
-Page BufferManager::insertIntoPool(string tableName, int pageIndex, bool isTable) {
+Page BufferManager::insertIntoPool(string tableName, int pageIndex,
+                                   bool isTable) {
   logger.log("BufferManager::insertIntoPool");
   Page page(tableName, pageIndex, isTable);
   if (this->pages.size() >= BLOCK_COUNT)

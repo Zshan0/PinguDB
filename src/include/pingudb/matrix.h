@@ -10,61 +10,57 @@
  * command and is using the TRANSPOSE operation.
  *
  */
-class Matrix
-{
+class Matrix {
 
 public:
-    string sourceFileName = "";
-    string matrixName = "";
-    long long int columnCount = 0;
-    long long int rowCount = 0;
-    long long int blockCount = 0;
-    long long int maxRowsPerBlock = 0;
-    long long int nonZeroElements = 0;
-    vector<long long int> rowsPerBlockCount;
-    bool sparse = false;
+  string sourceFileName = "";
+  string matrixName = "";
+  long long int columnCount = 0;
+  long long int rowCount = 0;
+  long long int blockCount = 0;
+  long long int maxRowsPerBlock = 0;
+  long long int nonZeroElements = 0;
+  vector<long long int> rowsPerBlockCount;
+  bool sparse = false;
 
-    bool blockify();
-    Matrix();
-    Matrix(string tableName);
-    bool sizeSetup();
-    void updateStatistics(vector<int> row);
-    bool isSparse();
-    bool load();
-    void print();
-    void makePermanent();
-    bool isPermanent();
-    void getNextPage(Cursor *cursor);
-    Cursor getCursor();
-    void unload();
+  bool blockify();
+  Matrix();
+  Matrix(string tableName);
+  bool sizeSetup();
+  void updateStatistics(vector<int> row);
+  bool isSparse();
+  bool load();
+  void print();
+  void makePermanent();
+  bool isPermanent();
+  void getNextPage(Cursor *cursor);
+  Cursor getCursor();
+  void unload();
 
-template <typename T>
-void writeRow(vector<T> row, ostream &fout)
-{
+  template <typename T>
+  void writeRow(vector<T> row, ostream &fout) {
     logger.log("Matrix::printRow");
-    for (int columnCounter = 0; columnCounter < row.size(); columnCounter++)
-    {
-        if (columnCounter != 0)
-            fout << ", ";
-        fout << row[columnCounter];
+    for (int columnCounter = 0; columnCounter < row.size(); columnCounter++) {
+      if (columnCounter != 0)
+        fout << ", ";
+      fout << row[columnCounter];
     }
     fout << endl;
-}
+  }
 
-/**
- * @brief Static function that takes a vector of valued and prints them out in a
- * comma seperated format.
- *
- * @tparam T current usaages include int and string
- * @param row
- */
-template <typename T>
-void writeRow(vector<T> row)
-{
+  /**
+   * @brief Static function that takes a vector of valued and prints them out in
+   * a comma seperated format.
+   *
+   * @tparam T current usaages include int and string
+   * @param row
+   */
+  template <typename T>
+  void writeRow(vector<T> row) {
     logger.log("Matrix::printRow");
     ofstream fout(this->sourceFileName, ios::app);
     this->writeRow(row, fout);
     fout.close();
-}
+  }
 };
 #endif
