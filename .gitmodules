@@ -1,0 +1,3 @@
+[submodule "src/extern/backward-cpp"]
+	path = src/extern/backward-cpp
+	url = git@github.com:bombela/backward-cpp.git
