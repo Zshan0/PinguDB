@@ -5,7 +5,6 @@
  * indexing_strategy: ASC | DESC | NOTHING
  */
 bool syntacticParseINDEX() {
-  logger.log("syntacticParseINDEX");
   if (tokenizedQuery.size() != 7 || tokenizedQuery[1] != "ON" ||
       tokenizedQuery[3] != "FROM" || tokenizedQuery[5] != "USING") {
     cout << "SYNTAX ERROR" << endl;
@@ -29,7 +28,6 @@ bool syntacticParseINDEX() {
 }
 
 bool semanticParseINDEX() {
-  logger.log("semanticParseINDEX");
   if (!tableCatalogue.isTable(parsedQuery.indexRelationName)) {
     cout << "SEMANTIC ERROR: Relation doesn't exist" << endl;
     return false;
@@ -47,7 +45,4 @@ bool semanticParseINDEX() {
   return true;
 }
 
-void executeINDEX() {
-  logger.log("executeINDEX");
-  return;
-}
+void executeINDEX() { return; }

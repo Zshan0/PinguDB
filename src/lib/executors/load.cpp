@@ -4,18 +4,13 @@
  * SYNTAX: LOAD relation_name
  */
 bool syntacticParseLOAD() {
-  logger.log("syntacticParseLOAD");
   if (tokenizedQuery.size() == 3) {
-
     if (tokenizedQuery[1] != "MATRIX") {
       cout << "SYNTAX ERROR" << endl;
       return false;
     }
-    logger.log("syntacticParseLOAD_MATRIX");
-
     parsedQuery.queryType = LOAD_MAT;
     parsedQuery.loadRelationName = tokenizedQuery[2];
-
   } else if (tokenizedQuery.size() == 2) {
     parsedQuery.queryType = LOAD;
     parsedQuery.loadRelationName = tokenizedQuery[1];
@@ -27,7 +22,6 @@ bool syntacticParseLOAD() {
 }
 
 bool semanticParseLOAD() {
-  logger.log("semanticParseLOAD");
   if (tableCatalogue.isTable(parsedQuery.loadRelationName)) {
     cout << "SEMANTIC ERROR: Relation already exists" << endl;
     return false;
@@ -41,8 +35,6 @@ bool semanticParseLOAD() {
 }
 
 bool semanticParseLOAD_MAT() {
-  logger.log("semanticParseLOAD_MAT");
-
   bool matrixExists = matrixCatalogue.isMatrix(parsedQuery.loadRelationName);
 
   if (matrixExists) {
@@ -59,8 +51,6 @@ bool semanticParseLOAD_MAT() {
 }
 
 void executeLOAD() {
-  logger.log("executeLOAD");
-
   Table *table = new Table(parsedQuery.loadRelationName);
   if (table->load()) {
     tableCatalogue.insertTable(table);
@@ -71,7 +61,6 @@ void executeLOAD() {
 }
 
 void executeLOAD_MAT() {
-  logger.log("executeLOAD_MAT");
   Matrix *matrix = new Matrix(parsedQuery.loadRelationName);
   if (matrix->load()) {
     matrixCatalogue.insertMatrix(matrix);

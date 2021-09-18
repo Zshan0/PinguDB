@@ -1,9 +1,4 @@
 #include "pingudb/global.h"
-/**
- * @brief Construct a new Matrix:: Matrix object
- *
- */
-Matrix::Matrix() { logger.log("Matrix::Matrix"); }
 
 /**
  * @brief Construct a new Matrix :: Matrix object used in the case where the
@@ -13,7 +8,6 @@ Matrix::Matrix() { logger.log("Matrix::Matrix"); }
  * @param matrixName
  */
 Matrix::Matrix(string matrixName) {
-  logger.log("Matrix::Matrix");
   this->sourceFileName = "../data/" + matrixName + ".csv";
   this->matrixName = matrixName;
 }
@@ -27,7 +21,6 @@ Matrix::Matrix(string matrixName) {
  * @return false if an error occurred
  */
 bool Matrix::load() {
-  logger.log("Matrix::load");
   return (this->sizeSetup() and this->isSparse() and this->blockify());
 }
 /**
@@ -82,8 +75,6 @@ bool Matrix::isSparse() {
  * @return false otherwise
  */
 bool Matrix::sizeSetup() {
-  logger.log("Matrix::sizeSetup");
-
   /*
    * checking the size of the first line to get the columnCount
    * CAN BE BETTER
@@ -122,8 +113,6 @@ bool Matrix::blockify() {
   /*
     NEED TO FIX -> ADD SUPPORT FOR COLUMNS > BLOCK SIZE
   */
-  logger.log("Matrix::blockify");
-
   if (not this->sparse) {
 
     ifstream fin(this->sourceFileName, ios::in);
@@ -239,8 +228,6 @@ void Matrix::updateStatistics(vector<int> row) {
  *
  */
 void Matrix::print() {
-  logger.log("Matrix::print");
-
   long long int count = min((long long int)PRINT_COUNT, this->rowCount);
 
   if (not this->sparse) {
@@ -254,7 +241,7 @@ void Matrix::print() {
   } else {
     /* sparse matrix */
     Cursor cursor(this->matrixName, 0, false);
-    vector<int> row();
+    vector<int> row;
 
     for (long long int rowCounter = 0; rowCounter < count; rowCounter++) {
       row = cursor.getNext(false);
@@ -272,8 +259,6 @@ void Matrix::print() {
  * @return vector<int>
  */
 void Matrix::getNextPage(Cursor *cursor) {
-  logger.log("Matrix::getNext");
-
   if (cursor->pageIndex < this->blockCount - 1) {
     cursor->nextPage(cursor->pageIndex + 1, false);
   }
@@ -285,7 +270,6 @@ void Matrix::getNextPage(Cursor *cursor) {
  *
  */
 void Matrix::makePermanent() {
-  logger.log("Matrix::makePermanent");
 
   if (!this->isPermanent())
     bufferManager.deleteFile(this->sourceFileName);
@@ -311,7 +295,6 @@ void Matrix::makePermanent() {
  * @return false otherwise
  */
 bool Matrix::isPermanent() {
-  logger.log("Matrix::isPermanent");
   return (this->sourceFileName == "../data/" + this->matrixName + ".csv");
 }
 
@@ -321,7 +304,6 @@ bool Matrix::isPermanent() {
  *
  */
 void Matrix::unload() {
-  logger.log("Matrix::~unload");
   for (long long int pageCounter = 0; pageCounter < this->blockCount;
        pageCounter++)
     bufferManager.deleteFile(this->matrixName, pageCounter);
@@ -335,7 +317,6 @@ void Matrix::unload() {
  * @return Cursor
  */
 Cursor Matrix::getCursor() {
-  logger.log("Matrix::getCursor");
   Cursor cursor(this->matrixName, 0, false);
   return cursor;
 }

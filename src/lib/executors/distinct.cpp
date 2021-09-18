@@ -5,7 +5,6 @@
  * SYNTAX: R <- DISTINCT relation_name
  */
 bool syntacticParseDISTINCT() {
-  logger.log("syntacticParseDISTINCT");
   if (tokenizedQuery.size() != 4) {
     cout << "SYNTAX ERROR" << endl;
     return false;
@@ -17,7 +16,6 @@ bool syntacticParseDISTINCT() {
 }
 
 bool semanticParseDISTINCT() {
-  logger.log("semanticParseDISTINCT");
   // The resultant table shouldn't exist and the table argument should
   if (tableCatalogue.isTable(parsedQuery.distinctResultRelationName)) {
     cout << "SEMANTIC ERROR: Resultant relation already exists" << endl;
@@ -31,7 +29,4 @@ bool semanticParseDISTINCT() {
   return true;
 }
 
-void executeDISTINCT() {
-  logger.log("executeDISTINCT");
-  return;
-}
+void executeDISTINCT() { return; }

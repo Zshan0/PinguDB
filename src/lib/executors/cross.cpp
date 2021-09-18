@@ -5,7 +5,6 @@
  * SYNTAX: R <- CROSS relation_name relation_name
  */
 bool syntacticParseCROSS() {
-  logger.log("syntacticParseCROSS");
   if (tokenizedQuery.size() != 5) {
     cout << "SYNTAX ERROR" << endl;
     return false;
@@ -18,7 +17,6 @@ bool syntacticParseCROSS() {
 }
 
 bool semanticParseCROSS() {
-  logger.log("semanticParseCROSS");
   // Both tables must exist and resultant table shouldn't
   if (tableCatalogue.isTable(parsedQuery.crossResultRelationName)) {
     cout << "SEMANTIC ERROR: Resultant relation already exists" << endl;
@@ -34,8 +32,6 @@ bool semanticParseCROSS() {
 }
 
 void executeCROSS() {
-  logger.log("executeCROSS");
-
   Table table1 = *(tableCatalogue.getTable(parsedQuery.crossFirstRelationName));
   Table table2 =
       *(tableCatalogue.getTable(parsedQuery.crossSecondRelationName));

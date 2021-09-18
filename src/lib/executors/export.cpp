@@ -6,13 +6,11 @@
  */
 
 bool syntacticParseEXPORT() {
-  logger.log("syntacticParseEXPORT");
   if (tokenizedQuery.size() == 3) {
     if (tokenizedQuery[1] != "MATRIX") {
       cout << "SYNTAX ERROR" << endl;
       return false;
     }
-    logger.log("syntacticParseEXPORT_MATRIX");
 
     parsedQuery.queryType = EXPORT_MAT;
     parsedQuery.exportRelationName = tokenizedQuery[2];
@@ -27,7 +25,6 @@ bool syntacticParseEXPORT() {
 }
 
 bool semanticParseEXPORT() {
-  logger.log("semanticParseEXPORT");
   // Table should exist
   if (tableCatalogue.isTable(parsedQuery.exportRelationName))
     return true;
@@ -36,7 +33,6 @@ bool semanticParseEXPORT() {
 }
 
 bool semanticParseEXPORT_MAT() {
-  logger.log("semanticParseEXPORT_MAT");
   // Matrix should exist
   bool exists = matrixCatalogue.isMatrix(parsedQuery.exportRelationName);
   if (exists)
@@ -46,14 +42,12 @@ bool semanticParseEXPORT_MAT() {
 }
 
 void executeEXPORT() {
-  logger.log("executeEXPORT");
   Table *table = tableCatalogue.getTable(parsedQuery.exportRelationName);
   table->makePermanent();
   return;
 }
 
 void executeEXPORT_MAT() {
-  logger.log("executeEXPORT_MAT");
   Matrix *matrix = matrixCatalogue.getMatrix(parsedQuery.exportRelationName);
   matrix->makePermanent();
   return;

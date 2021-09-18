@@ -1,10 +1,5 @@
 #include "pingudb/global.h"
-
-/**
- * @brief Construct a new Table:: Table object
- *
- */
-Table::Table() { logger.log("Table::Table"); }
+#include <cassert>
 
 /**
  * @brief Construct a new Table:: Table object used in the case where the data
@@ -14,7 +9,6 @@ Table::Table() { logger.log("Table::Table"); }
  * @param tableName
  */
 Table::Table(string tableName) {
-  logger.log("Table::Table");
   this->sourceFileName = "../data/" + tableName + ".csv";
   this->tableName = tableName;
 }
@@ -28,7 +22,6 @@ Table::Table(string tableName) {
  * @param columns
  */
 Table::Table(string tableName, vector<string> columns) {
-  logger.log("Table::Table");
   this->sourceFileName = "../data/temp/" + tableName + ".csv";
   this->tableName = tableName;
   this->columns = columns;
@@ -47,7 +40,6 @@ Table::Table(string tableName, vector<string> columns) {
  * @return false if an error occurred
  */
 bool Table::load() {
-  logger.log("Table::load");
   fstream fin(this->sourceFileName, ios::in);
   string line;
   if (getline(fin, line)) {
@@ -70,7 +62,6 @@ bool Table::load() {
  * @return false otherwise
  */
 bool Table::extractColumnNames(string firstLine) {
-  logger.log("Table::extractColumnNames");
   unordered_set<string> columnNames;
   string word;
   stringstream s(firstLine);
@@ -95,7 +86,6 @@ bool Table::extractColumnNames(string firstLine) {
  * @return false otherwise
  */
 bool Table::blockify() {
-  logger.log("Table::blockify");
   ifstream fin(this->sourceFileName, ios::in);
   string line, word;
   vector<int> row(this->columnCount, 0);
@@ -167,7 +157,6 @@ void Table::updateStatistics(vector<int> row) {
  * @return false
  */
 bool Table::isColumn(string columnName) {
-  logger.log("Table::isColumn");
   for (auto col : this->columns) {
     if (col == columnName) {
       return true;
@@ -185,7 +174,6 @@ bool Table::isColumn(string columnName) {
  * @param toColumnName
  */
 void Table::renameColumn(string fromColumnName, string toColumnName) {
-  logger.log("Table::renameColumn");
   for (int columnCounter = 0; columnCounter < this->columnCount;
        columnCounter++) {
     if (columns[columnCounter] == fromColumnName) {
@@ -203,7 +191,6 @@ void Table::renameColumn(string fromColumnName, string toColumnName) {
  *
  */
 void Table::print() {
-  logger.log("Table::print");
   uint count = min((long long)PRINT_COUNT, this->rowCount);
 
   // print headings
@@ -226,8 +213,6 @@ void Table::print() {
  * @return vector<int>
  */
 void Table::getNextPage(Cursor *cursor) {
-  logger.log("Table::getNext");
-
   if (cursor->pageIndex < this->blockCount - 1) {
     cursor->nextPage(cursor->pageIndex + 1);
   }
@@ -239,7 +224,6 @@ void Table::getNextPage(Cursor *cursor) {
  *
  */
 void Table::makePermanent() {
-  logger.log("Table::makePermanent");
   if (!this->isPermanent())
     bufferManager.deleteFile(this->sourceFileName);
   string newSourceFile = "../data/" + this->tableName + ".csv";
@@ -264,7 +248,6 @@ void Table::makePermanent() {
  * @return false otherwise
  */
 bool Table::isPermanent() {
-  logger.log("Table::isPermanent");
   if (this->sourceFileName == "../data/" + this->tableName + ".csv")
     return true;
   return false;
@@ -276,7 +259,6 @@ bool Table::isPermanent() {
  *
  */
 void Table::unload() {
-  logger.log("Table::~unload");
   for (int pageCounter = 0; pageCounter < this->blockCount; pageCounter++)
     bufferManager.deleteFile(this->tableName, pageCounter);
   if (!isPermanent())
@@ -289,10 +271,10 @@ void Table::unload() {
  * @return Cursor
  */
 Cursor Table::getCursor() {
-  logger.log("Table::getCursor");
   Cursor cursor(this->tableName, 0);
   return cursor;
 }
+
 /**
  * @brief Function that returns the index of column indicated by columnName
  *
@@ -300,10 +282,15 @@ Cursor Table::getCursor() {
  * @return int
  */
 int Table::getColumnIndex(string columnName) {
-  logger.log("Table::getColumnIndex");
+  int ret = -1;
   for (int columnCounter = 0; columnCounter < this->columnCount;
        columnCounter++) {
-    if (this->columns[columnCounter] == columnName)
-      return columnCounter;
+    if (this->columns[columnCounter] == columnName) {
+      ret = columnCounter;
+      break;
+    }
   }
+
+  assert(ret != -1 && "Column not found!");
+  return ret;
 }

@@ -1,7 +1,6 @@
 #include "pingudb/global.h"
 
 bool syntacticParse() {
-  logger.log("syntacticParse");
   string possibleQueryType = tokenizedQuery[0];
 
   if (tokenizedQuery.size() < 2) {
@@ -25,7 +24,6 @@ bool syntacticParse() {
     return syntacticParseEXPORT();
   else if (possibleQueryType == "SOURCE")
     return syntacticParseSOURCE();
-  // new functions
   else if (possibleQueryType == "TRANSPOSE")
     return syntacticParseTRANSPOSE();
   else {
@@ -58,7 +56,6 @@ bool syntacticParse() {
 ParsedQuery::ParsedQuery() {}
 
 void ParsedQuery::clear() {
-  logger.log("ParseQuery::clear");
   this->queryType = UNDETERMINED;
 
   this->clearRelationName = "";

@@ -1,5 +1,6 @@
 #ifndef table_H
 #define table_H
+
 #include "cursor.h"
 
 enum IndexingStrategy { BTREE, HASH, NOTHING };
@@ -56,7 +57,6 @@ public:
    */
   template <typename T>
   void writeRow(vector<T> row, ostream &fout) {
-    logger.log("Table::printRow");
     for (int columnCounter = 0; columnCounter < row.size(); columnCounter++) {
       if (columnCounter != 0)
         fout << ", ";
@@ -74,7 +74,6 @@ public:
    */
   template <typename T>
   void writeRow(vector<T> row) {
-    logger.log("Table::printRow");
     ofstream fout(this->sourceFileName, ios::app);
     this->writeRow(row, fout);
     fout.close();

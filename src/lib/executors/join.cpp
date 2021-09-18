@@ -5,7 +5,6 @@
  * column_name2
  */
 bool syntacticParseJOIN() {
-  logger.log("syntacticParseJOIN");
   if (tokenizedQuery.size() != 9 || tokenizedQuery[5] != "ON") {
     cout << "SYNTAC ERROR" << endl;
     return false;
@@ -38,7 +37,6 @@ bool syntacticParseJOIN() {
 }
 
 bool semanticParseJOIN() {
-  logger.log("semanticParseJOIN");
 
   if (tableCatalogue.isTable(parsedQuery.joinResultRelationName)) {
     cout << "SEMANTIC ERROR: Resultant relation already exists" << endl;
@@ -61,7 +59,4 @@ bool semanticParseJOIN() {
   return true;
 }
 
-void executeJOIN() {
-  logger.log("executeJOIN");
-  return;
-}
+void executeJOIN() { return; }

@@ -3,7 +3,6 @@ add_library(DATABASE_LIB
   clear.cpp
   cursor.cpp
   executor.cpp
-  logger.cpp
   matrixCatalogue.cpp
   matrix.cpp
   page.cpp

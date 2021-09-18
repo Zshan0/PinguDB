@@ -4,7 +4,6 @@
  * SYNTAX: R <- PROJECT column_name1, ... FROM relation_name
  */
 bool syntacticParsePROJECTION() {
-  logger.log("syntacticParsePROJECTION");
   if (tokenizedQuery.size() < 5 || *(tokenizedQuery.end() - 2) != "FROM") {
     cout << "SYNTAX ERROR" << endl;
     return false;
@@ -19,8 +18,6 @@ bool syntacticParsePROJECTION() {
 }
 
 bool semanticParsePROJECTION() {
-  logger.log("semanticParsePROJECTION");
-
   if (tableCatalogue.isTable(parsedQuery.projectionResultRelationName)) {
     cout << "SEMANTIC ERROR: Resultant relation already exists" << endl;
     return false;
@@ -42,7 +39,6 @@ bool semanticParsePROJECTION() {
 }
 
 void executePROJECTION() {
-  logger.log("executePROJECTION");
   Table *resultantTable = new Table(parsedQuery.projectionResultRelationName,
                                     parsedQuery.projectionColumnList);
   Table table = *tableCatalogue.getTable(parsedQuery.projectionRelationName);

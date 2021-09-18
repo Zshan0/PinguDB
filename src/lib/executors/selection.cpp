@@ -5,7 +5,6 @@
  * relation_name
  */
 bool syntacticParseSELECTION() {
-  logger.log("syntacticParseSELECTION");
   if (tokenizedQuery.size() != 8 || tokenizedQuery[6] != "FROM") {
     cout << "SYNTAC ERROR" << endl;
     return false;
@@ -45,8 +44,6 @@ bool syntacticParseSELECTION() {
 }
 
 bool semanticParseSELECTION() {
-  logger.log("semanticParseSELECTION");
-
   if (tableCatalogue.isTable(parsedQuery.selectionResultRelationName)) {
     cout << "SEMANTIC ERROR: Resultant relation already exists" << endl;
     return false;
@@ -93,8 +90,6 @@ bool evaluateBinOp(int value1, int value2, BinaryOperator binaryOperator) {
 }
 
 void executeSELECTION() {
-  logger.log("executeSELECTION");
-
   Table table = *tableCatalogue.getTable(parsedQuery.selectionRelationName);
   Table *resultantTable =
       new Table(parsedQuery.selectionResultRelationName, table.columns);

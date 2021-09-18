@@ -4,7 +4,6 @@
  * SYNTAX: SOURCE filename
  */
 bool syntacticParseSOURCE() {
-  logger.log("syntacticParseSOURCE");
   if (tokenizedQuery.size() != 2) {
     cout << "SYNTAX ERROR" << endl;
     return false;
@@ -15,7 +14,6 @@ bool syntacticParseSOURCE() {
 }
 
 bool semanticParseSOURCE() {
-  logger.log("semanticParseSOURCE");
   if (!isQueryFile(parsedQuery.sourceFileName)) {
     cout << "SEMANTIC ERROR: File doesn't exist" << endl;
     return false;
@@ -23,7 +21,4 @@ bool semanticParseSOURCE() {
   return true;
 }
 
-void executeSOURCE() {
-  logger.log("executeSOURCE");
-  return;
-}
+void executeSOURCE() { return; }

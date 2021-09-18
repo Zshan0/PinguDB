@@ -25,7 +25,6 @@ Page::Page() {
  * @param pageIndex
  */
 Page::Page(string constructName, int pageIndex, bool isTable) {
-  logger.log("Page::Page");
   if (isTable) {
     this->constructName = constructName;
     this->pageIndex = pageIndex;
@@ -86,7 +85,6 @@ Page::Page(string constructName, int pageIndex, bool isTable) {
  * @return vector<int>
  */
 vector<int> Page::getRow(int rowIndex) {
-  logger.log("Page::getRow");
   vector<int> result;
   result.clear();
   if (rowIndex >= this->rowCount)
@@ -96,7 +94,6 @@ vector<int> Page::getRow(int rowIndex) {
 
 Page::Page(string constructName, int pageIndex, vector<vector<int>> rows,
            int rowCount) {
-  logger.log("Page::Page");
   this->constructName = constructName;
   this->pageIndex = pageIndex;
   this->rows = rows;
@@ -111,7 +108,6 @@ Page::Page(string constructName, int pageIndex, vector<vector<int>> rows,
  *
  */
 void Page::writePage() {
-  logger.log("Page::writePage");
   ofstream fout(this->pageName, ios::trunc);
   for (int rowCounter = 0; rowCounter < this->rowCount; rowCounter++) {
     for (int columnCounter = 0; columnCounter < this->columnCount;

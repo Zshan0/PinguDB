@@ -1,5 +1,6 @@
 #ifndef matrix_H
 #define matrix_H
+
 #include "cursor.h"
 
 /**
@@ -39,7 +40,6 @@ public:
 
   template <typename T>
   void writeRow(vector<T> row, ostream &fout) {
-    logger.log("Matrix::printRow");
     for (int columnCounter = 0; columnCounter < row.size(); columnCounter++) {
       if (columnCounter != 0)
         fout << ", ";
@@ -57,7 +57,6 @@ public:
    */
   template <typename T>
   void writeRow(vector<T> row) {
-    logger.log("Matrix::printRow");
     ofstream fout(this->sourceFileName, ios::app);
     this->writeRow(row, fout);
     fout.close();

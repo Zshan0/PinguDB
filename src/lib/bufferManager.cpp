@@ -1,6 +1,5 @@
 #include "pingudb/global.h"
-
-BufferManager::BufferManager() { logger.log("BufferManager::BufferManager"); }
+#include <assert.h>
 
 /**
  * @brief Function called to read a page from the buffer manager. If the page is
@@ -11,7 +10,6 @@ BufferManager::BufferManager() { logger.log("BufferManager::BufferManager"); }
  * @return Page
  */
 Page BufferManager::getPage(string tableName, int pageIndex, bool isTable) {
-  logger.log("BufferManager::getPage");
   string pageName =
       "../data/temp/" + tableName + "_Page" + to_string(pageIndex);
   if (this->inPool(pageName))
@@ -28,7 +26,6 @@ Page BufferManager::getPage(string tableName, int pageIndex, bool isTable) {
  * @return false
  */
 bool BufferManager::inPool(string pageName) {
-  logger.log("BufferManager::inPool");
   for (auto page : this->pages) {
     if (pageName == page.pageName)
       return true;
@@ -45,10 +42,13 @@ bool BufferManager::inPool(string pageName) {
  * @return Page
  */
 Page BufferManager::getFromPool(string pageName) {
-  logger.log("BufferManager::getFromPool");
+  Page retPage;
   for (auto page : this->pages)
-    if (pageName == page.pageName)
-      return page;
+    if (pageName == page.pageName) {
+      retPage = page;
+      break;
+    }
+  return retPage;
 }
 
 /**
@@ -62,7 +62,6 @@ Page BufferManager::getFromPool(string pageName) {
  */
 Page BufferManager::insertIntoPool(string tableName, int pageIndex,
                                    bool isTable) {
-  logger.log("BufferManager::insertIntoPool");
   Page page(tableName, pageIndex, isTable);
   if (this->pages.size() >= BLOCK_COUNT)
     pages.pop_front();
@@ -81,7 +80,6 @@ Page BufferManager::insertIntoPool(string tableName, int pageIndex,
  */
 void BufferManager::writePage(string tableName, int pageIndex,
                               vector<vector<int>> rows, int rowCount) {
-  logger.log("BufferManager::writePage");
   Page page(tableName, pageIndex, rows, rowCount);
   page.writePage();
 }
@@ -92,11 +90,7 @@ void BufferManager::writePage(string tableName, int pageIndex,
  * @param fileName
  */
 void BufferManager::deleteFile(string fileName) {
-
-  if (remove(fileName.c_str()))
-    logger.log("BufferManager::deleteFile: Err");
-  else
-    logger.log("BufferManager::deleteFile: Success");
+  remove(fileName.c_str());
 }
 
 /**
@@ -107,7 +101,6 @@ void BufferManager::deleteFile(string fileName) {
  * @param pageIndex
  */
 void BufferManager::deleteFile(string tableName, int pageIndex) {
-  logger.log("BufferManager::deleteFile");
   string fileName =
       "../data/temp/" + tableName + "_Page" + to_string(pageIndex);
   this->deleteFile(fileName);

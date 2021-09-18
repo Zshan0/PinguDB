@@ -4,7 +4,6 @@
  * SYNTAX: RENAME column_name TO column_name FROM relation_name
  */
 bool syntacticParseRENAME() {
-  logger.log("syntacticParseRENAME");
   if (tokenizedQuery.size() != 6 || tokenizedQuery[2] != "TO" ||
       tokenizedQuery[4] != "FROM") {
     cout << "SYNTAX ERROR" << endl;
@@ -18,8 +17,6 @@ bool syntacticParseRENAME() {
 }
 
 bool semanticParseRENAME() {
-  logger.log("semanticParseRENAME");
-
   if (!tableCatalogue.isTable(parsedQuery.renameRelationName)) {
     cout << "SEMANTIC ERROR: Relation doesn't exist" << endl;
     return false;
@@ -40,7 +37,6 @@ bool semanticParseRENAME() {
 }
 
 void executeRENAME() {
-  logger.log("executeRENAME");
   Table *table = tableCatalogue.getTable(parsedQuery.renameRelationName);
   table->renameColumn(parsedQuery.renameFromColumnName,
                       parsedQuery.renameToColumnName);

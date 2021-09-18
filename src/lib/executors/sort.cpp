@@ -8,7 +8,6 @@
  * sorting_order = ASC | DESC
  */
 bool syntacticParseSORT() {
-  logger.log("syntacticParseSORT");
   if (tokenizedQuery.size() != 8 || tokenizedQuery[4] != "BY" ||
       tokenizedQuery[6] != "IN") {
     cout << "SYNTAX ERROR" << endl;
@@ -31,8 +30,6 @@ bool syntacticParseSORT() {
 }
 
 bool semanticParseSORT() {
-  logger.log("semanticParseSORT");
-
   if (tableCatalogue.isTable(parsedQuery.sortResultRelationName)) {
     cout << "SEMANTIC ERROR: Resultant relation already exists" << endl;
     return false;
@@ -52,7 +49,4 @@ bool semanticParseSORT() {
   return true;
 }
 
-void executeSORT() {
-  logger.log("executeSORT");
-  return;
-}
+void executeSORT() { return; }

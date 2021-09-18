@@ -1,7 +1,6 @@
 #include "pingudb/global.h"
 
 bool semanticParse() {
-  logger.log("semanticParse");
   switch (parsedQuery.queryType) {
   case CLEAR:
     return semanticParseCLEAR();

@@ -1,7 +1,6 @@
 #include "pingudb/global.h"
 
 Cursor::Cursor(string tableName, int pageIndex, bool isTable) {
-  logger.log("Cursor::Cursor");
   this->page = bufferManager.getPage(tableName, pageIndex, isTable);
   this->pagePointer = 0;
   this->tableName = tableName;
@@ -16,7 +15,6 @@ Cursor::Cursor(string tableName, int pageIndex, bool isTable) {
  * @return vector<int>
  */
 vector<int> Cursor::getNext(bool isTable) {
-  logger.log("Cursor::geNext");
   vector<int> result = this->page.getRow(this->pagePointer);
   this->pagePointer++;
   if (result.empty()) {
@@ -40,7 +38,6 @@ vector<int> Cursor::getNext(bool isTable) {
  * @param pageIndex
  */
 void Cursor::nextPage(int pageIndex, bool isTable) {
-  logger.log("Cursor::nextPage");
   this->page = bufferManager.getPage(this->tableName, pageIndex, isTable);
   this->pageIndex = pageIndex;
   this->pagePointer = 0;

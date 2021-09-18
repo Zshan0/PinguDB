@@ -1,6 +1,19 @@
 #ifndef page_H
 #define page_H
-#include "logger.h"
+
+#include <string>
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <unordered_map>
+#include <unordered_set>
+#include <deque>
+#include <sys/stat.h>
+#include <sstream>
+#include <regex>
+
+using namespace std;
+
 /**
  * @brief The Page object is the main memory representation of a physical page
  * (equivalent to a block). The page class and the page.h header file are at the
@@ -11,9 +24,7 @@
  * or Teams with justification and gaining approval from the TAs.
  *</p>
  */
-
 class Page {
-
   string constructName;
   string pageIndex;
   int columnCount;
