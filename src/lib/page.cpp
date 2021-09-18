@@ -34,14 +34,14 @@ Page::Page(string constructName, int pageIndex, bool isTable) {
     Table table = *tableCatalogue.getTable(constructName);
     this->columnCount = table.columnCount;
     uint maxRowCount = table.maxRowsPerBlock;
-    vector<int> row(columnCount, 0);
+    vector<int> row(this->columnCount, 0);
     this->rows.assign(maxRowCount, row);
 
     ifstream fin(pageName, ios::in);
     this->rowCount = table.rowsPerBlockCount[pageIndex];
     int number;
     for (uint rowCounter = 0; rowCounter < this->rowCount; rowCounter++) {
-      for (int columnCounter = 0; columnCounter < columnCount;
+      for (int columnCounter = 0; columnCounter < this->columnCount;
            columnCounter++) {
         fin >> number;
         this->rows[rowCounter][columnCounter] = number;
@@ -55,16 +55,21 @@ Page::Page(string constructName, int pageIndex, bool isTable) {
     this->pageName =
         "../data/temp/" + this->constructName + "_Page" + to_string(pageIndex);
     Matrix matrix = *matrixCatalogue.getMatrix(constructName);
-    this->columnCount = matrix.columnCount;
+
+    if(matrix.sparse) {
+      this->columnCount = 3;
+    } else {
+      this->columnCount = matrix.columnCount;
+    }
     uint maxRowCount = matrix.maxRowsPerBlock;
-    vector<int> row(columnCount, 0);
+    vector<int> row(this->columnCount, 0);
     this->rows.assign(maxRowCount, row);
 
     ifstream fin(pageName, ios::in);
     this->rowCount = matrix.rowsPerBlockCount[pageIndex];
     int number;
     for (uint rowCounter = 0; rowCounter < this->rowCount; rowCounter++) {
-      for (int columnCounter = 0; columnCounter < columnCount;
+      for (int columnCounter = 0; columnCounter < this->columnCount;
            columnCounter++) {
         fin >> number;
         this->rows[rowCounter][columnCounter] = number;

@@ -28,7 +28,7 @@ Matrix::Matrix(string matrixName) {
  */
 bool Matrix::load() {
   logger.log("Matrix::load");
-  return (this->isSparse() and this->sizeSetup() and this->blockify());
+  return (this->sizeSetup() and this->isSparse() and this->blockify());
 }
 /**
  * @brief Reads the whole file and checks if the matrix is
@@ -59,8 +59,18 @@ bool Matrix::isSparse() {
     }
   }
 
-  this->sparse = (float)total * 0.6 > (float)nonZeros;
+  this->sparse = nonZeros <= 0.4 * total;
   this->nonZeroElements = nonZeros;
+
+  if (this->sparse) {
+    this->maxRowsPerBlock =
+        (long long int)((BLOCK_SIZE * 1000) / (sizeof(long long int) * 3));
+    return true;
+  }
+
+  this->maxRowsPerBlock =
+      (long long int)((BLOCK_SIZE * 1000) / (sizeof(int) * this->columnCount));
+
   return true;
 }
 
@@ -88,24 +98,16 @@ bool Matrix::sizeSetup() {
   string word;
   stringstream s(line);
   int colCount = 0;
-  vector<int> row;
   while (getline(s, word, ',')) {
-    row.push_back(stoi(word));
+    colCount++;
   }
+
   if (colCount == 0) {
     return false;
   }
 
-  this->columnCount = row.size();
-  cout << "colCount" << this->columnCount << endl;
-  if (this->sparse) {
-    this->maxRowsPerBlock =
-        (long long int)((BLOCK_SIZE * 1000) / (sizeof(long long int) * 3));
-    return true;
-  }
+  this->columnCount = colCount;
 
-  this->maxRowsPerBlock =
-      (long long int)((BLOCK_SIZE * 1000) / (sizeof(int) * this->columnCount));
   return true;
 }
 
@@ -123,6 +125,7 @@ bool Matrix::blockify() {
   logger.log("Matrix::blockify");
 
   if (not this->sparse) {
+
     ifstream fin(this->sourceFileName, ios::in);
     string line, word;
     vector<int> row(this->columnCount, 0);
@@ -137,15 +140,19 @@ bool Matrix::blockify() {
            columnCounter++) {
         if (!getline(s, word, ','))
           return false;
+
         row[columnCounter] = stoi(word);
         rowsInPage[pageCounter][columnCounter] = row[columnCounter];
       }
+
       pageCounter++;
       this->updateStatistics(row);
 
       if (pageCounter == this->maxRowsPerBlock) {
+
         bufferManager.writePage(this->matrixName, this->blockCount, rowsInPage,
                                 pageCounter);
+
         this->blockCount++;
         this->rowsPerBlockCount.emplace_back(pageCounter);
         pageCounter = 0;
@@ -154,6 +161,7 @@ bool Matrix::blockify() {
 
     // if anything is remaining
     if (pageCounter) {
+
       bufferManager.writePage(this->matrixName, this->blockCount, rowsInPage,
                               pageCounter);
       this->blockCount++;
@@ -173,17 +181,17 @@ bool Matrix::blockify() {
     int pageCounter = 0;
 
     while (getline(fin, line)) {
+      j = 0;
       stringstream s(line);
 
       for (int columnCounter = 0; columnCounter < this->columnCount;
            columnCounter++) {
         if (!getline(s, word, ','))
           return false;
+
         int num = stoi(word);
         if (num != 0) {
-          row[0] = i;
-          row[1] = j;
-          row[2] = num;
+          row[0] = i; row[1] = j; row[2] = num;
           rowsInPage[pageCounter][0] = i;
           rowsInPage[pageCounter][1] = j;
           rowsInPage[pageCounter][2] = num;
@@ -221,11 +229,6 @@ bool Matrix::blockify() {
  * @param row
  */
 void Matrix::updateStatistics(vector<int> row) {
-  cout << "here:";
-  for (int i = 0; i < 3; i++) {
-    cout << row[i] << " ";
-  }
-  cout << endl;
   this->rowCount++;
 }
 
@@ -251,7 +254,8 @@ void Matrix::print() {
   } else {
     /* sparse matrix */
     Cursor cursor(this->matrixName, 0, false);
-    vector<int> row;
+    vector<int> row();
+
     for (long long int rowCounter = 0; rowCounter < count; rowCounter++) {
       row = cursor.getNext(false);
       this->writeRow(row, cout);
