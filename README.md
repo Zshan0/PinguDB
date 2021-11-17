@@ -26,7 +26,7 @@ make -j 10
 directory.
 
 ```
-ln -s compile_commands.json ../src/
+ln -s compile_commands.json ../build/
 ```
 
 1. To enable stack tracing, build like this:
